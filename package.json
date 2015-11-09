@@ -1,0 +1,29 @@
+{
+  "name": "generator-arrowjs",
+  "version": "0.1.0",
+  "description": "ArrowJS generator",
+  "license": "MIT",
+  "main": "app/index.js",
+  "author": {
+    "name": "Techmaster Vietnam",
+    "email": "cuong@techmaster.vn",
+    "url": "https://github.com/arrowjs"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.19.0",
+    "chalk": "^1.0.0",
+    "yosay": "^1.0.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
