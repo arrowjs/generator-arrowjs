@@ -1,5 +1,6 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
 
 module.exports = yeoman.generators.NamedBase.extend({
     initializing: function () {

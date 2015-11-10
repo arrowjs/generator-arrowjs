@@ -1,7 +1,7 @@
 {
   "name": "helloworld",
-  "version": "1.0.0",
-  "description": "Simple Arrowjs.io web app",
+  "version": "0.1.0",
+  "description": "Simple ArrowJS web app",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
