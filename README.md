@@ -36,6 +36,10 @@ Example:
 ```
     yo arrowjs:module mymodule
 ```
+## Useful links to create Arrowjs.io web app
+
+* [Arrowjs.io Core examples](https://github.com/arrowjs/examples) 
+* [Documentation](https://github.com/arrowjs/Documents)
 
 ## License
 
