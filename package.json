@@ -1,6 +1,6 @@
 {
   "name": "generator-arrowjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ArrowJS generator",
   "license": "MIT",
   "main": "app/index.js",
@@ -9,6 +9,10 @@
     "email": "cuong@techmaster.vn",
     "url": "https://github.com/arrowjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arrowjs/generator-arrowjs.git"
+  },
   "scripts": {
     "test": "mocha"
   },
@@ -16,7 +20,8 @@
     "generators"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "generator-arrowjs"
   ],
   "dependencies": {
     "yeoman-generator": "^0.19.0",
