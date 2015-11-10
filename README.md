@@ -3,7 +3,7 @@ ArrowJS generator
 
 Yeoman generator for ArrowJS
 
-##Usage
+## Usage
 
 Install yo and generator-arrowjs:
 
