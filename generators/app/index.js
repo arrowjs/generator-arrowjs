@@ -1,42 +1,93 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+
+let yeoman = require('yeoman-generator');
+let yosay = require('yosay');
+let functions = require('../../lib/function');
+let templates = require('../../lib/template');
 
 module.exports = yeoman.generators.Base.extend({
+
     prompting: function () {
-        var done = this.async();
+        let self = this;
+        let done = self.async();
 
         this.log(yosay(
-            'Welcome to the marvelous ' + chalk.red('Arrowjs') + ' generator!'
+            'Welcome to the marvelous \x1b[36m Arrowjs \x1b[0m generator!'
         ));
 
-        var prompts = [{
-            type: 'input',
-            name: 'appName',
-            message: 'Your project name',
-            default: this.appname // Default to current folder name
-        }];
+        let prompts = [
+            {
+                type: 'input',
+                name: 'appName',
+                message: 'Enter name of the directory to contain the project:'
+            },
+            {
+                type: 'confirm',
+                name: 'useDatabase',
+                message: 'Do you want to use Database ?'
+            }
+        ];
 
-        this.prompt(prompts, function (props) {
-            this.props = props;
+        functions.promptAsync(self, prompts).then(function (answers) {
+            if (answers.useDatabase) {
+                console.log('Configure database connection.');
+
+                let promptsDB = [
+                    {
+                        type: 'input',
+                        name: 'host',
+                        message: 'Host: ',
+                        default: 'localhost'
+                    },
+                    {
+                        type: 'input',
+                        name: 'database',
+                        message: 'Database name: '
+                    },
+                    {
+                        type: 'input',
+                        name: 'username',
+                        message: 'Username: '
+                    },
+                    {
+                        type: 'password',
+                        name: 'password',
+                        message: 'Password: '
+                    },
+                    {
+                        type: 'list',
+                        name: 'dialect',
+                        message: 'Dialect: ',
+                        choices: ['postgres', 'mysql', 'mariadb', 'sqlite']
+                    }
+                ];
+
+                return functions.promptAsync(self, promptsDB).then(function (dbconfig) {
+                    self.props = answers;
+                    self.dbconfig = dbconfig;
+                });
+            } else {
+                self.props = answers;
+            }
+        }).then(function () {
             done();
-        }.bind(this));
+        });
     },
 
     writing: {
         directories: function () {
             this.fs.copy(
-                this.templatePath('config'),
-                this.destinationPath(this.props.appName + '/config')
+                this.templatePath('features'),
+                this.destinationPath(this.props.appName + '/features')
             );
             this.fs.copy(
-                this.templatePath('modules'),
-                this.destinationPath(this.props.appName + '/modules')
+                this.templatePath('public'),
+                this.destinationPath(this.props.appName + '/public')
             );
         },
 
         files: function () {
+            // Create "server.js" and "package.json"
             this.fs.copy(
                 this.templatePath('_server.js'),
                 this.destinationPath(this.props.appName + '/server.js')
@@ -45,6 +96,26 @@ module.exports = yeoman.generators.Base.extend({
                 this.templatePath('_package.json'),
                 this.destinationPath(this.props.appName + '/package.json')
             );
+
+            // Create config "development.js" and "structure.js"
+            if (this.dbconfig) {   // If use database
+                this.fs.copy(
+                    this.templatePath('_structure_db.js'),
+                    this.destinationPath(this.props.appName + '/config/structure.js')
+                );
+
+                let configContent = templates.config(this.dbconfig);
+                this.fs.write(this.props.appName + '/config/env/development.js', configContent);
+            } else {    // If don't use database
+                this.fs.copy(
+                    this.templatePath('_development.js'),
+                    this.destinationPath(this.props.appName + '/config/env/development.js')
+                );
+                this.fs.copy(
+                    this.templatePath('_structure.js'),
+                    this.destinationPath(this.props.appName + '/config/structure.js')
+                );
+            }
         }
     },
 
@@ -53,9 +124,9 @@ module.exports = yeoman.generators.Base.extend({
         this.npmInstall();
     },
 
-    end: function(){
-        console.log(chalk.magenta("Done. To get started fast:"));
-        console.log(chalk.magenta("   $ cd " + this.props.appName));
-        console.log(chalk.magenta("   $ node server.js"));
+    end: function () {
+        console.log('\x1b[36m Done. To get started fast: \x1b[0m');
+        console.log('\x1b[36m    $ cd ' + this.props.appName + ' \x1b[0m');
+        console.log('\x1b[36m    $ node server.js \x1b[0m');
     }
 });

@@ -8,7 +8,7 @@ describe('arrowjs:app', function () {
     before(function (done) {
         helpers.run(path.join(__dirname, '../generators/app'))
             .withOptions({skipInstall: true})
-            .withPrompts({appName: 'Hello World', appType: 'Hello World 2'})
+            .withPrompts({appName: 'Hello World'})
             .on('end', done);
     });
 
@@ -20,23 +20,12 @@ describe('arrowjs:app', function () {
             ]);
         });
 
-        it('creates config files', function () {
+        it('creates feature files', function () {
             assert.file([
-                'config/config.js',
-                'config/mail.js',
-                'config/redis.js',
-                'config/structure.js',
-                'config/view.js'
-            ]);
-        });
-
-        it('creates module files', function () {
-            let viewExtension = '.twig';
-
-            assert.file([
-                'modules/index/module.js',
-                'modules/index/route.js',
-                'modules/index/controller/index.js'
+                'features/index/feature.js',
+                'features/index/route.js',
+                'features/index/controllers/index.js',
+                'features/index/views/index.html'
             ]);
         });
     });
