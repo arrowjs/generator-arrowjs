@@ -1,5 +1,5 @@
 {
-  "name": "simple app",
+  "name": "simple-app",
   "version": "1.0.0",
   "description": "Simple Arrowjs.io web app",
   "main": "server.js",
