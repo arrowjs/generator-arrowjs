@@ -1,0 +1,39 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+    <h2>Feature: <%= name %></h2>
+
+    <h3>List of APIs</h3>
+
+    <table>
+        <tr>
+            <td>GET</td>
+            <td>/<%= name %></td>
+            <td>List all <%= name %></td>
+        </tr>
+
+        <tr>
+            <td>POST</td>
+            <td>/<%= name %>/create</td>
+            <td>Create <%= name %></td>
+        </tr>
+
+        <tr>
+            <td>GET</td>
+            <td>/<%= name %>/{id}</td>
+            <td>Detail of <%= name %></td>
+        </tr>
+
+        <tr>
+            <td>PUT</td>
+            <td>/<%= name %>/{id}</td>
+            <td>Update <%= name %></td>
+        </tr>
+
+        <tr>
+            <td>DELETE</td>
+            <td>/<%= name %>/{id}</td>
+            <td>Delete <%= name %></td>
+        </tr>
+    </table>
+{% endblock %}
