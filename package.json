@@ -1,6 +1,6 @@
 {
   "name": "generator-arrowjs",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "ArrowJS generator",
   "license": "MIT",
   "main": "app/index.js",
