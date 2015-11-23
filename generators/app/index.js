@@ -37,17 +37,20 @@ module.exports = yeoman.generators.Base.extend({
                         type: 'input',
                         name: 'host',
                         message: 'Host: ',
-                        default: 'localhost'
+                        default: 'localhost',
+                        store: true
                     },
                     {
                         type: 'input',
                         name: 'database',
-                        message: 'Database name: '
+                        message: 'Database name: ',
+                        store: true
                     },
                     {
                         type: 'input',
                         name: 'username',
-                        message: 'Username: '
+                        message: 'Username: ',
+                        store: true
                     },
                     {
                         type: 'password',
@@ -58,7 +61,8 @@ module.exports = yeoman.generators.Base.extend({
                         type: 'list',
                         name: 'dialect',
                         message: 'Dialect: ',
-                        choices: ['postgres', 'mysql', 'mariadb', 'sqlite']
+                        choices: ['postgres', 'mysql', 'mariadb', 'sqlite'],
+                        store: true
                     }
                 ];
 
@@ -74,48 +78,47 @@ module.exports = yeoman.generators.Base.extend({
         });
     },
 
-    writing: {
-        directories: function () {
-            this.fs.copy(
-                this.templatePath('features'),
-                this.destinationPath(this.props.appName + '/features')
-            );
-            this.fs.copy(
-                this.templatePath('public'),
-                this.destinationPath(this.props.appName + '/public')
-            );
-        },
+    writing: function () {
+        let fs = this.fs;
 
-        files: function () {
-            // Create "server.js" and "package.json"
-            this.fs.copy(
-                this.templatePath('_server.js'),
-                this.destinationPath(this.props.appName + '/server.js')
-            );
-            this.fs.copy(
-                this.templatePath('_package.json'),
-                this.destinationPath(this.props.appName + '/package.json')
+        // Create features directory and public directory
+        fs.copy(
+            this.templatePath('features'),
+            this.destinationPath(this.props.appName + '/features')
+        );
+        fs.copy(
+            this.templatePath('public'),
+            this.destinationPath(this.props.appName + '/public')
+        );
+
+        // Create "server.js" and "package.json"
+        fs.copy(
+            this.templatePath('_server.js'),
+            this.destinationPath(this.props.appName + '/server.js')
+        );
+        fs.copy(
+            this.templatePath('_package.json'),
+            this.destinationPath(this.props.appName + '/package.json')
+        );
+
+        // Create config "development.js" and "structure.js"
+        if (this.dbconfig) {   // If use database
+            fs.copy(
+                this.templatePath('_structure_db.js'),
+                this.destinationPath(this.props.appName + '/config/structure.js')
             );
 
-            // Create config "development.js" and "structure.js"
-            if (this.dbconfig) {   // If use database
-                this.fs.copy(
-                    this.templatePath('_structure_db.js'),
-                    this.destinationPath(this.props.appName + '/config/structure.js')
-                );
-
-                let configContent = templates.config(this.dbconfig);
-                this.fs.write(this.props.appName + '/config/env/development.js', configContent);
-            } else {    // If don't use database
-                this.fs.copy(
-                    this.templatePath('_development.js'),
-                    this.destinationPath(this.props.appName + '/config/env/development.js')
-                );
-                this.fs.copy(
-                    this.templatePath('_structure.js'),
-                    this.destinationPath(this.props.appName + '/config/structure.js')
-                );
-            }
+            let configContent = templates.config(this.dbconfig);
+            fs.write(this.props.appName + '/config/env/development.js', configContent);
+        } else {    // If don't use database
+            fs.copy(
+                this.templatePath('_development.js'),
+                this.destinationPath(this.props.appName + '/config/env/development.js')
+            );
+            fs.copy(
+                this.templatePath('_structure.js'),
+                this.destinationPath(this.props.appName + '/config/structure.js')
+            );
         }
     },
 
@@ -125,8 +128,8 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     end: function () {
-        console.log('\x1b[36m Done. To get started fast: \x1b[0m');
-        console.log('\x1b[36m    $ cd ' + this.props.appName + ' \x1b[0m');
-        console.log('\x1b[36m    $ node server.js \x1b[0m');
+        console.log(`\x1b[36m Done. To get started fast: \x1b[0m`);
+        console.log(`\x1b[36m    $ cd ${this.props.appName} \x1b[0m`);
+        console.log(`\x1b[36m    $ node server.js \x1b[0m`);
     }
 });

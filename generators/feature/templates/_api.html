@@ -1,39 +1,60 @@
 {% extends '_layout.html' %}
 
 {% block content %}
-    <h2>Feature: <%= name %></h2>
+    <h2>Feature <span class="text-primary"><%= name %></span></h2>
 
     <h3>List of APIs</h3>
 
-    <table>
-        <tr>
-            <td>GET</td>
-            <td>/<%= name %></td>
-            <td>List all <%= name %></td>
-        </tr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th width="10%" class="text-center">Method</th>
+                <th class="text-center">Router</th>
+                <th class="text-center">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center">
+                    <span class="btn btn-tag btn-success">GET</span>
+                </td>
+                <td>/<%= name %></td>
+                <td>List all <%= name %></td>
+            </tr>
 
-        <tr>
-            <td>POST</td>
-            <td>/<%= name %>/create</td>
-            <td>Create <%= name %></td>
-        </tr>
+            <tr>
+                <td class="text-center">
+                    <span class="btn btn-tag btn-info">POST</span>
+                </td>
+                <td>/<%= name %></td>
+                <td>Create <%= name %></td>
+            </tr>
 
-        <tr>
-            <td>GET</td>
-            <td>/<%= name %>/{id}</td>
-            <td>Detail of <%= name %></td>
-        </tr>
+            <tr>
+                <td class="text-center">
+                    <span class="btn btn-tag btn-success">GET</span>
+                </td>
+                <td>/<%= name %>/{id}</td>
+                <td>Detail of <%= name %></td>
+            </tr>
 
-        <tr>
-            <td>PUT</td>
-            <td>/<%= name %>/{id}</td>
-            <td>Update <%= name %></td>
-        </tr>
+            <tr>
+                <td class="text-center">
+                    <span class="btn btn-tag btn-warning">PUT</span>
+                </td>
+                <td>/<%= name %>/{id}</td>
+                <td>Update <%= name %></td>
+            </tr>
 
-        <tr>
-            <td>DELETE</td>
-            <td>/<%= name %>/{id}</td>
-            <td>Delete <%= name %></td>
-        </tr>
-    </table>
+            <tr>
+                <td class="text-center">
+                    <span class="btn btn-tag btn-danger">DELETE</span>
+                </td>
+                <td>/<%= name %>/{id}</td>
+                <td>Delete <%= name %></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
