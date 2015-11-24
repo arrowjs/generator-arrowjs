@@ -2,8 +2,8 @@
 
 let yeoman = require('yeoman-generator');
 let yosay = require('yosay');
-let functions = require('../../lib/function');
-let templates = require('../../lib/template');
+let functions = require('../lib/function');
+let templates = require('../lib/template');
 
 module.exports = yeoman.generators.Base.extend({
 

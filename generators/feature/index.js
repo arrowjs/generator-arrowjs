@@ -1,9 +1,9 @@
 'use strict';
 
 let yeoman = require('yeoman-generator');
-let functions = require('../../lib/function');
-let templates = require('../../lib/template');
-let validator = require('../../lib/validator');
+let functions = require('../lib/function');
+let templates = require('../lib/template');
+let validator = require('../lib/validator');
 
 function askProperty(self) {
     return functions.promptAsync(self, [{
@@ -154,10 +154,6 @@ module.exports = yeoman.generators.NamedBase.extend({
         if (this.confirm.addMenu) {
             fs.write('public/_features.html', features);
         }
-    },
-
-    conflicts : function(){
-
     },
 
     end: function () {
